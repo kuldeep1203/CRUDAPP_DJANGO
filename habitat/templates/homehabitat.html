@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title></title>
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        {%load static %}
+        <link rel="stylesheet" href="{%static 'C:\Users\kulu1\Desktop\dbms_project\static\css\page.css'%}">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"rel ="stylesheet" >
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    </head>
+    
+    <body>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">ABC Sanctuary</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              {% if user.is_authenticated %}
+              `<li class="nav-item">
+                <a class="nav-link" href="http://127.0.0.1:8000/logout">logout</a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="http://127.0.0.1:8000/admin">Admin Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="http://127.0.0.1:8000/login">Staff Login</a>
+              </li>
+              {% endif %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#"  id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Fauna
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li><a class="dropdown-item" href="http://127.0.0.1:8000/fauna/">Search</a></li>
+                  <li><a class="dropdown-item" href="http://127.0.0.1:8000/insert/
+                    
+                    ">Insert Data</a></li>
+           
+                </ul>
+              </li>
+             
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#"  id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Habitat
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li><a class="dropdown-item" href="http://127.0.0.1:8000/homehabitat/">Search</a></li>
+                  
+                  <li><a class="dropdown-item" href="http://127.0.0.1:8000/habitatinsert/">Insert Data</a></li>
+                
+                </ul>
+              </li>
+            </ul>
+
+
+            
+          </div>
+        </div>
+      </nav>
+      {% if messages %}
+        {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+      </div>
+        {% endfor %}
+    {% endif %}
+      <div class="row">
+        <div class="col-12 mt-4 ms-4">
+          <form class="d-flex" method="POST" action="{%url 'searchhabitat'%}">
+            {% csrf_token %}
+            <input class="form-control-lg me-2" type="search" placeholder="Search_by" aria-label="Search" name="searched">
+            <select class="form-select-sm me-2" aria-label="Filter" name="filter1">
+              <option selected>Search by...</option>
+              <option value="name">Name</option>
+              <option value="specices">major_fauna</option>
+              
+              
+             
+            </select>
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+          </form>
+          <div class="my-custom-row">
+            
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 ms-md-auto mt-4  ">
+          <table class="table table-dark table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">name</th>
+                <th scope="col">Type</th>
+                <th scope="col">major_fauna</th>
+                <th scope="col">Area_covered</th>
+                <th scope="col">last_updated</th>
+               
+  
+  
+              </tr>
+            </thead>
+            <tbody>
+              {%if habitat_list %}
+           
+                {% for habitat in habitat_list %}
+                <tr>
+                  <td><a href="{%url 'habitat' habitat.Habitat_id%}">{{habitat.Habitat_id}}</a></td>
+                  <td>{{habitat.name}}</td>
+                  <td>{{habitat.type}}</td>
+                  <td>{{habitat.major_fauna}}</td>
+                  <td>{{habitat.area_covered}}</td>
+                  <td>{{habitat.last_updated}}</td>
+                
+                </tr>
+                 
+                {% endfor %}
+              
+              {% endif %}  
+  
+  
+              
+            </tbody>
+          </table>
+          
+        </div>
+      </div>
+
+        
+    
+</body>
+</html>

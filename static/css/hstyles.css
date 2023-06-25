@@ -1,0 +1,19 @@
+body{
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(to right,#394867  0%,#394867 50%,#394867 0%,#F1F6F9 50%);      
+    
+}
+
+.wel{
+    text-align: center;
+    font-family: "Ubuntu";
+    padding-top: 40%;
+    font-size :2.5rem;
+    color: floralwhite;
+    padding-left: 20%;
+    padding-right: 20%;
+}
+.col-md-6{
+    text-align: center;
+}
